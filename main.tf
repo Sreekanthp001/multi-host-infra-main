@@ -36,9 +36,9 @@ module "mail_server" {
   project_name     = var.project_name
   vpc_id           = module.networking.vpc_id
   public_subnet_id = module.networking.public_subnet_ids[0]
-  ami_id           = "ami-0522ab6e1ddcc7055" # Ubuntu 22.04 LTS in ap-south-1
-  key_name         = "webhizzy-prod" # Ensure this key exists
-  main_domain      = "webhizzy.in"
+  ami_id           = var.mail_server_ami
+  key_name         = var.mail_server_key_name
+  main_domain      = var.main_domain
 }
 
 # 4. Route 53 & ACM Module
@@ -59,7 +59,7 @@ module "route53_acm" {
   mail_from_domains   = module.ses_config.mail_from_domains
   
   # Business Mail Integration
-  main_domain         = "webhizzy.in"
+  main_domain         = var.main_domain
   mail_server_ip      = module.mail_server.mail_server_ip
 
   # CloudFront outputs for static domain routing
@@ -88,7 +88,7 @@ module "ecs" {
   secret_arns        = module.secrets.secret_arns
 }
 
-# 7. Client Deployment Module (Corrected References)
+# 7. Client Deployment Module
 module "client_deployment" {
   source   = "./modules/client_deployment"
   for_each = local.client_domains
@@ -115,7 +115,7 @@ module "static_hosting" {
   acm_certificate_arn   = module.route53_acm.acm_certificate_arn
 }
 
-# 9. Monitoring Module (CloudWatch Alarms)
+# 9. Monitoring Module
 module "monitoring" {
   source                  = "./modules/monitoring"
   project_name            = var.project_name
@@ -123,7 +123,6 @@ module "monitoring" {
   client_domains          = local.client_domains
   static_client_configs   = var.static_client_configs
   
-  # Module Outputs
   ecs_cluster_name            = module.ecs.cluster_name
   alb_arn_suffix              = module.alb.alb_arn_suffix
   target_group_arn_suffix     = { for k, v in module.client_deployment : k => v.target_group_arn_suffix }
@@ -138,7 +137,7 @@ module "secrets" {
   client_domains = local.client_domains
 }
 
-# 11. WAF Module (Bonus: Security)
+# 11. WAF Module
 module "waf" {
   source       = "./modules/waf"
   project_name = var.project_name

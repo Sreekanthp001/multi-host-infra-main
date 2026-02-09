@@ -34,3 +34,18 @@ variable "alert_email" {
   description = "The email address for CloudWatch alarm notifications"
   type        = string
 }
+
+variable "main_domain" {
+  type        = string
+  description = "The primary domain for the hosting platform (e.g., venturemond.com)"
+}
+
+variable "mail_server_ami" {
+  type        = string
+  description = "AMI ID for the mail server"
+}
+
+variable "mail_server_key_name" {
+  type        = string
+  description = "Key pair name for the mail server"
+}
