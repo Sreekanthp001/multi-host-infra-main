@@ -3,8 +3,8 @@
 project_name     = "venturemond-infra"
 aws_region       = "us-east-1"
 vpc_cidr         = "10.0.0.0/16"
-forwarding_email = "tsreekanth57@gmail.com"
-alert_email      = "tsreekanth57@gmail.com"
+forwarding_email = "sreekanthpaleti1999@gmail.com"
+alert_email      = "sreekanthpaleti1999@gmail.com"
 
 # 1. Dynamic Domain (ECS based)
 clients = {
