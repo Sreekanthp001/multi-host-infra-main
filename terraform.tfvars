@@ -18,13 +18,20 @@ clients = {
     github_repo    = "https://github.com/Sreekanthp001/vm2-modern-portfolio.git"
     container_port = 80
     priority       = 100
-  }
+  },
   "mounika" = {
     domain_name    = "mounikaindyala.fun"
     github_repo    = "https://github.com/Sreekanthp001/vm-organic-food-store.git"
     container_port = 80
     priority       = 110
+  },
+  "mail-domain" = {  # Idhi thappakunda add cheyali
+    domain_name    = "webhizzy.in"
+    github_repo    = "none"
+    container_port = 80
+    priority       = 999
   }
+
 }
 
 # 2. Static Domain (S3 + CloudFront based)
